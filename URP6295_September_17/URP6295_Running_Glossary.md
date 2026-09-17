@@ -115,3 +115,39 @@ Movement of people, vehicles, or other entities between locations.
 ### Point of Interest
 
 A mapped location with a meaningful use or destination.
+
+### Census Tract
+
+A small geographic area used by the Census Bureau to organize demographic and socioeconomic statistics.
+
+### American Community Survey
+
+A Census Bureau survey program that provides regularly updated demographic, social, housing, and economic estimates.
+
+### GIS Shapefile
+
+A set of files that stores geographic feature geometry and related attributes.
+
+### TIGER Data
+
+Census Bureau geographic boundary and feature data used with GIS workflows.
+
+### Travel Survey
+
+Data collected from people or households about trips, travel time, cost, purpose, and mode.
+
+### Point of Interest
+
+A mapped destination or location with a meaningful category, such as a school, station, park, store, or clinic.
+
+### Provenance
+
+The record of where data came from, how it was collected, and what happened to it before analysis.
+
+### Reproducibility
+
+The ability for another person to follow the documented environment and steps and obtain the same result.
+
+### Dependency
+
+A library, package, or other software component required for a program to run.

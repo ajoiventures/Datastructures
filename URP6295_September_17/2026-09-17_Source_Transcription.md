@@ -101,3 +101,28 @@ Metadata is information about a data source. It is commonly collected by univers
 
 Metadata helps answer: Who created the data? What does each field mean? What area and time period does it cover? How should it be accessed and cited? It is often ignored, but it is essential for using a dataset correctly.
 
+## Newly added screenshots
+
+### Screenshot 7 Kaggle dataset
+
+Kaggle is shown as a place to find public datasets. The lesson is to inspect the dataset description, fields, files, license, and provenance before using it. A dataset page is a starting point for discovery, not automatic proof that the data is complete or appropriate.
+
+### Screenshot 8 Census ACS data example
+
+The example is a table in which rows represent spatial units such as census tracts and columns represent variables. The table illustrates how many coded fields can describe population, housing, or socioeconomic conditions. The row geography and the meaning of each column must be documented before analysis.
+
+### Screenshot 9 GIS shapefiles
+
+The slide names TIGER data from the Census Bureau, local GIS information from universities and governments, and OpenStreetMap. These sources can provide boundaries, roads, transit, amenities, land use, water, and other geographic features. GIS data combines geometry with attributes.
+
+### Screenshot 10 Travel surveys
+
+Travel surveys are commonly conducted at the individual level and provide trip-level information such as travel time, travel cost, and travel mode. Examples include the National Household Travel Survey, state add-ons, Chicago Metropolitan Agency for Planning surveys, and Google Distance Matrix API data for filling missing travel information.
+
+### Screenshot 11 Points of interest
+
+The point-of-interest example shows mapped places and nearby attributes. A point of interest can be a school, store, park, clinic, station, or other destination. The analysis depends on the point coordinates, the category, the source, and the spatial relationship being measured.
+
+### Screenshot 12 Adding new data to an existing model or algorithm
+
+The final slide describes a checklist for using an open-source GitHub repository: read the README installation instructions, install the minimum required dependencies, check obvious problems and recent commits, reproduce the work on a personal computer, and avoid installing a package that is not needed. The insight is that data analysis includes reproducibility and environment management, not only writing new code.

@@ -204,6 +204,77 @@ for key, value in dataset_metadata.items():
 
 Before analysis, ask who created the data, what one row or feature represents, what the fields mean, what units are used, what places and dates are included, how missing values are represented, and what limitations apply.
 
+## Lesson 8 Census and ACS tables describe places
+
+In a Census or American Community Survey table, each row may represent a census tract and each column may represent a variable. The row key tells you which place is being described. The column names and codebook tell you what each measurement means.
+
+~~~python
+import pandas as pd
+
+acs = pd.read_csv('acs_data.csv')
+print(acs.shape)
+print(acs.columns.tolist())
+print(acs[['tract_id', 'total_population']].head())
+~~~
+
+Do not treat a coded field as self-explanatory. Confirm whether it is a count, percentage, estimate, margin of error, or category code. Check the geography and year before comparing rows.
+
+## Lesson 9 GIS sources provide geometry and attributes
+
+GIS sources such as Census TIGER data, local government GIS portals, and OpenStreetMap can provide boundaries, roads, transit lines, water, land use, and points of interest. GIS analysis joins a location's geometry to descriptive attributes.
+
+~~~python
+import geopandas as gpd
+
+tracts = gpd.read_file('census_tracts.shp')
+print(tracts.shape)
+print(tracts.geometry.geom_type.value_counts())
+tracts.plot()
+~~~
+
+The geometry answers where. The attribute columns answer what. A map can look correct while still using the wrong coordinate system, geography, or date, so inspect the source metadata.
+
+## Lesson 10 Travel surveys describe trips
+
+Travel surveys are often collected from individuals or households and provide trip-level information such as origin, destination, travel time, cost, purpose, and mode. The screenshot names the National Household Travel Survey, state add-ons, Chicago Metropolitan Agency for Planning surveys, and the Google Distance Matrix API.
+
+~~~python
+trips = pd.read_csv('travel_survey.csv')
+mode_counts = trips['mode'].value_counts()
+average_time = trips.groupby('mode')['travel_time_minutes'].mean()
+print(mode_counts)
+print(average_time)
+~~~
+
+The unit of analysis matters. One row may be one trip, one person, or one household. Mixing those units can produce incorrect rates or totals.
+
+## Lesson 11 Points of interest connect destinations to place
+
+A point of interest is a mapped destination such as a school, clinic, station, park, or store. A POI dataset normally includes coordinates, a category, a name, and a source.
+
+~~~python
+pois = gpd.read_file('points_of_interest.geojson')
+schools = pois[pois['category'] == 'school']
+print(schools[['name', 'geometry']].head())
+~~~
+
+POI analysis can count destinations, measure access, find the nearest service, or compare neighborhoods. State the distance measure, search radius, category rules, and date so the result is reproducible.
+
+## Lesson 12 Using new data with an existing algorithm
+
+The final screenshot gives a practical open-source checklist. Read the README, follow the installation instructions, install only the required dependencies, look for obvious problems and recent changes, run a small test on your own computer, and document what worked.
+
+~~~text
+1. Read README.md.
+2. Create or activate the required environment.
+3. Install the minimum dependencies.
+4. Run the smallest example first.
+5. Add the new dataset only after the example works.
+6. Record versions, settings, and output.
+~~~
+
+This is reproducibility. A result is stronger when another person can rebuild the environment and repeat the steps. Do not install a package merely because it appears in a repository if the current task does not need it.
+
 ## How the lessons connect
 
 | Stage | Tool or concept | Beginner question |
@@ -253,6 +324,13 @@ Before analysis, ask who created the data, what one row or feature represents, w
 - Point of interest: A mapped location with a meaningful use or destination.
 - Breakpoint: A location where a debugger pauses program execution.
 - F-string: A formatted Python string that inserts values into text.
+- Census tract: A small geographic area used for Census statistics.
+- American Community Survey: A Census program providing demographic, housing, social, and economic estimates.
+- TIGER data: Census geographic boundaries and features used in GIS.
+- Travel survey: Data about trips, travel time, cost, purpose, and mode.
+- Provenance: The record of where data came from and how it was prepared.
+- Reproducibility: The ability to repeat documented steps and obtain the same result.
+- Dependency: A software component required for a program to run.
 
 ## Final review habit
 
@@ -261,4 +339,3 @@ Use this sequence every time:
 inspect -> organize -> calculate -> visualize -> document
 
 Before trusting a result, explain what the data is, how it is shaped, what operation was applied, what the output means, and what metadata supports the interpretation.
-
