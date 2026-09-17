@@ -126,3 +126,9 @@ The point-of-interest example shows mapped places and nearby attributes. A point
 ### Screenshot 12 Adding new data to an existing model or algorithm
 
 The final slide describes a checklist for using an open-source GitHub repository: read the README installation instructions, install the minimum required dependencies, check obvious problems and recent commits, reproduce the work on a personal computer, and avoid installing a package that is not needed. The insight is that data analysis includes reproducibility and environment management, not only writing new code.
+
+### Screenshot 13 Public versus private data
+
+Public data usually has no single unified loading tool. It arrives in different forms for different tools, and different research groups may collect, clean, document, and upload it differently. A quick read-and-print preview is a practical first check before investing in a full analysis.
+
+Private data is protected and often difficult to access, but large companies may have a unified internal workflow. The slide uses Amazon as an example: teams may use shared tools such as AWS or SageMaker, while access to customer identifiers and purchases is controlled. The key contrast is open-data fragmentation versus private-data access controls and standardized internal pipelines.

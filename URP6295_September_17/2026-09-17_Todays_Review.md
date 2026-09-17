@@ -275,6 +275,27 @@ The final screenshot gives a practical open-source checklist. Read the README, f
 
 This is reproducibility. A result is stronger when another person can rebuild the environment and repeat the steps. Do not install a package merely because it appears in a repository if the current task does not need it.
 
+## Lesson 13 Public and private data have different workflows
+
+Public data is often fragmented. Different groups may use different formats, collection equipment, cleaning habits, documentation, and upload practices. There may be no single loading tool that works for every source.
+
+Start with a small preview:
+
+~~~python
+import pandas as pd
+
+public_data = pd.read_csv('public_dataset.csv')
+print(public_data.shape)
+print(public_data.head())
+print(public_data.dtypes)
+~~~
+
+Reading and printing a small preview can reveal wrong headers, missing values, unexpected types, or a file that is not the dataset you expected.
+
+Private data is protected and may require permission, contracts, or internal credentials. Large organizations often standardize their internal tools and pipelines, but access to customer identifiers and purchases remains restricted. In urban analysis, treat privacy, access rights, and re-identification risk as part of the data workflow.
+
+The practical lesson is to ask two questions before analysis: how can I access this data legitimately, and how consistent and documented is the pipeline that produced it?
+
 ## How the lessons connect
 
 | Stage | Tool or concept | Beginner question |
@@ -331,6 +352,11 @@ This is reproducibility. A result is stronger when another person can rebuild th
 - Provenance: The record of where data came from and how it was prepared.
 - Reproducibility: The ability to repeat documented steps and obtain the same result.
 - Dependency: A software component required for a program to run.
+- Public data: Data available outside a private organization, often with varied formats and documentation quality.
+- Private data: Protected data whose access is controlled by an organization or agreement.
+- Data pipeline: The sequence of steps used to collect, clean, transform, analyze, and store data.
+- Data preview: A small inspection of rows, columns, types, and shape before full analysis.
+- Access control: Rules that determine who may view or use data.
 
 ## Final review habit
 
