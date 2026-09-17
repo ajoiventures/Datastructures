@@ -132,3 +132,27 @@ The final slide describes a checklist for using an open-source GitHub repository
 Public data usually has no single unified loading tool. It arrives in different forms for different tools, and different research groups may collect, clean, document, and upload it differently. A quick read-and-print preview is a practical first check before investing in a full analysis.
 
 Private data is protected and often difficult to access, but large companies may have a unified internal workflow. The slide uses Amazon as an example: teams may use shared tools such as AWS or SageMaker, while access to customer identifiers and purchases is controlled. The key contrast is open-data fragmentation versus private-data access controls and standardized internal pipelines.
+
+### Screenshot 14 Clean tables and maps
+
+The Python lab question asks how to turn a large Florida table into a clean table and maps. The example contains population and demographic fields, ratio fields, missing values, and maps of median property value and median household income.
+
+### Screenshot 15 NumPy arrays and pandas DataFrames
+
+The slide compares the same ridership values in a NumPy array and a pandas DataFrame. The array uses numeric positions such as row 3 and column 8. The DataFrame uses labels such as Thursday and 08:00. A DataFrame is a two-dimensional array with row and column names.
+
+### Screenshot 16 Four key elements of a table
+
+Every table needs a clear observation unit, defined columns and dtypes, a key that identifies rows, and missing-value rules. The analyst should be able to finish the sentence one row is one ____. A join or group-by operation depends on the key; if the key is wrong, the code may still run while producing incorrect results.
+
+### Screenshot 17 Parcel and permit tables
+
+The example shows a parcel table with parcel_id, tract_geoid, year_built, heated_sqft, just_value, and use_code. A second permit table includes permit_id, parcel_id, issued_date, permit_type, and valuation. The shared parcel_id connects permits back to parcels. The year_built example includes NaN, demonstrating a missing value that requires an explicit rule.
+
+### Screenshot 18 Parcel and permit example repeated
+
+The example reinforces the relationship between parcel records and permit records. parcel_id links the tables, while tract_geoid connects a parcel to a census geography. The fields have different meanings and units, so the table must not be treated as one undifferentiated block of numbers.
+
+### Screenshot 19 Missing values are not all the same
+
+The slide distinguishes NaN, an empty string, 0, and -999. NaN may mean not recorded or lost in a join. An empty string may mean a blank form entry and may be treated as a value rather than missing. Zero is usually a genuine measured zero or default value. -999 may be a sentinel from an older system. Only NaN is automatically treated as missing by common pandas operations; the other codes need an explicit cleaning rule.

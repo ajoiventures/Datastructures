@@ -296,6 +296,94 @@ Private data is protected and may require permission, contracts, or internal cre
 
 The practical lesson is to ask two questions before analysis: how can I access this data legitimately, and how consistent and documented is the pipeline that produced it?
 
+## Lesson 14 Clean tables and maps
+
+The new screenshot asks how to produce a clean table from a larger Florida dataset. The table contains counts, demographic fields, ratios, and missing values. The maps show median property value and median household income by geography.
+
+~~~python
+import pandas as pd
+
+florida = pd.read_csv('florida_data.csv')
+print(florida.shape)
+print(florida.dtypes)
+clean = florida[['geoid', 'pop_total', 'households', 'median_income', 'median_property_value']].copy()
+clean = clean.dropna(subset=['geoid'])
+print(clean.head())
+~~~
+
+The table is ready for mapping only when every row has a known geographic meaning, each selected column has a definition and unit, and missing values are handled intentionally.
+
+## Lesson 15 Arrays and DataFrames use different labels
+
+The screenshot compares the same ridership values in a NumPy array and a pandas DataFrame. The array selects by numeric position. The DataFrame selects by meaningful row and column labels.
+
+~~~python
+import numpy as np
+import pandas as pd
+
+ridership = np.zeros((7, 24))
+ridership[3, 8] = 4120.0
+print(ridership.shape)
+print(ridership[3, 8])
+
+ridership_df = pd.DataFrame(
+    ridership,
+    index=['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    columns=[f'{hour:02d}:00' for hour in range(24)]
+)
+print(ridership_df.shape)
+print(ridership_df.loc['Thu', '08:00'])
+~~~
+
+Labels make code easier to read and reduce row and column position mistakes.
+
+## Lesson 16 Four questions define a table
+
+Before analysis, answer: What is one row? What does each column measure and in what units? What column or combination is the key? What does a blank mean?
+
+~~~python
+print(df.head())
+print(df.dtypes)
+print(df.isna().sum())
+print(df['parcel_id'].is_unique)
+~~~
+
+A group-by or merge can run even when the key is wrong. Data structure knowledge is therefore also quality control.
+
+## Lesson 17 Parcel and permit tables show relational data
+
+The parcel table includes parcel_id, tract_geoid, year_built, heated_sqft, just_value, and use_code. The permit table includes permit_id, parcel_id, issued_date, permit_type, and valuation. parcel_id is the shared key.
+
+~~~python
+parcels = pd.read_csv('parcels.csv')
+permits = pd.read_csv('permits.csv')
+parcel_permits = parcels.merge(permits, on='parcel_id', how='left')
+print(parcel_permits[['parcel_id', 'permit_type', 'valuation']].head())
+~~~
+
+The left join keeps every parcel and attaches matching permits. A parcel may have multiple permits, so one parcel can become multiple joined rows. NaN in year_built is not automatically zero; it means the value is missing or unavailable and needs a documented rule.
+
+## Lesson 18 Missing values need interpretation
+
+The newest screenshot warns that missing-looking values are not all equivalent.
+
+| Stored value | Possible meaning | Safe first action |
+|---|---|---|
+| NaN | Not recorded, unavailable, or lost in a join | Count with isna and investigate the source. |
+| Empty string | A blank form entry or an intentionally empty text value | Decide whether blank means missing for this field. |
+| 0 | A real zero or a default value | Confirm that zero is possible and meaningful. |
+| -999 | A sentinel code from an older system | Recode only after checking the data dictionary. |
+
+~~~python
+import numpy as np
+
+df['year_built'] = df['year_built'].replace(-999, np.nan)
+df['permit_type'] = df['permit_type'].replace('', np.nan)
+print(df.isna().sum())
+~~~
+
+Do not replace every unusual value with zero. That would turn unknown information into a false measurement. Missing-value handling is part of the analysis design and must be documented.
+
 ## How the lessons connect
 
 | Stage | Tool or concept | Beginner question |
@@ -357,6 +445,15 @@ The practical lesson is to ask two questions before analysis: how can I access t
 - Data pipeline: The sequence of steps used to collect, clean, transform, analyze, and store data.
 - Data preview: A small inspection of rows, columns, types, and shape before full analysis.
 - Access control: Rules that determine who may view or use data.
+- DataFrame: A two-dimensional labeled table in pandas.
+- Observation unit: The real-world thing represented by one row.
+- Key: A column or combination of columns that identifies a row.
+- Missing value: A blank or special marker whose meaning must be defined.
+- Relational join: Combining tables through a shared key.
+- Left join: A join that keeps every row from the left table and adds matches from the right table.
+- NaN: A common marker for a missing numeric value.
+- Sentinel value: A special code such as -999 used to represent unknown or unavailable data.
+- Empty string: Text with no characters, which may or may not mean missing data.
 
 ## Final review habit
 
