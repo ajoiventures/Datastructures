@@ -384,6 +384,53 @@ print(df.isna().sum())
 
 Do not replace every unusual value with zero. That would turn unknown information into a false measurement. Missing-value handling is part of the analysis design and must be documented.
 
+## Lesson 19 Use len to compare row counts
+
+len is a quick way to count rows in a DataFrame. Use it before and after each important action so you can see whether the table became smaller, larger, or unexpectedly duplicated.
+
+~~~python
+before = len(df)
+clean = df.dropna(subset=['parcel_id'])
+after = len(clean)
+
+print(f'Before cleaning: {before} rows')
+print(f'After cleaning: {after} rows')
+print(f'Rows removed: {before - after}')
+~~~
+
+For a filter, the row count should usually decrease or stay the same:
+
+~~~python
+before = len(df)
+florida_only = df[df['state'] == 'FL']
+after = len(florida_only)
+assert after <= before
+~~~
+
+For a left join, compare both tables and the result:
+
+~~~python
+parcel_rows = len(parcels)
+permit_rows = len(permits)
+joined = parcels.merge(permits, on='parcel_id', how='left')
+joined_rows = len(joined)
+
+print(parcel_rows, permit_rows, joined_rows)
+~~~
+
+If one parcel has several permits, the joined table can have more rows than the parcel table. That is not automatically an error; it means the result is now permit-level rather than one-row-per-parcel. Use validate when you know the expected relationship:
+
+~~~python
+joined = parcels.merge(
+    permits,
+    on='parcel_id',
+    how='left',
+    validate='one_to_many'
+)
+~~~
+
+len is a warning light, not a complete quality check. Two tables can have the same number of rows and still have the wrong keys, duplicated records, or incorrect values. Compare row counts together with unique keys, missing values, and the meaning of one row.
+
 ## How the lessons connect
 
 | Stage | Tool or concept | Beginner question |
@@ -454,6 +501,8 @@ Do not replace every unusual value with zero. That would turn unknown informatio
 - NaN: A common marker for a missing numeric value.
 - Sentinel value: A special code such as -999 used to represent unknown or unavailable data.
 - Empty string: Text with no characters, which may or may not mean missing data.
+- Row count: The number of records in a table, often checked with len(dataframe).
+- One-to-many join: A relationship in which one row in the left table can match several rows in the right table.
 
 ## Final review habit
 
