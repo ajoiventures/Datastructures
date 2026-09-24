@@ -524,3 +524,25 @@ Before trusting a result, explain what the data is, how it is shaped, what opera
 - [DataFrame isna](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isna.html)
 - [Merging and joining](https://pandas.pydata.org/docs/reference/api/pandas.merge.html)
 - [DataFrame groupby](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html)
+
+## Standing merge audit rule
+
+Always use both `len()` and `.shape` before and after every merge. `len(df)` gives the row count; `df.shape` gives rows and columns. Record both so you can see whether the merge changed the number of records or fields.
+
+~~~python
+print('parcels before:', len(parcels), parcels.shape)
+print('permits before:', len(permits), permits.shape)
+
+joined = parcels.merge(
+    permits,
+    on='parcel_id',
+    how='left',
+    validate='one_to_many'
+)
+
+print('joined after:', len(joined), joined.shape)
+print('unique parcel keys:', parcels['parcel_id'].nunique())
+print('unique joined parcel keys:', joined['parcel_id'].nunique())
+~~~
+
+Then explain any row-count change. A larger result may be correct when one parcel has many permits. A smaller result may indicate an inner join, dropped unmatched records, or a filtering step. Equal counts do not prove that the merge is correct; still check key uniqueness, missing keys, and the observation unit.
