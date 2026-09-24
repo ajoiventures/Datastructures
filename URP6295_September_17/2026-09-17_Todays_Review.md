@@ -511,3 +511,16 @@ Use this sequence every time:
 inspect -> organize -> calculate -> visualize -> document
 
 Before trusting a result, explain what the data is, how it is shaped, what operation was applied, what the output means, and what metadata supports the interpretation.
+
+## Official pandas references
+
+- [pandas documentation home](https://pandas.pydata.org/docs/)
+- [DataFrame](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html)
+- [Read CSV files](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
+- [Indexing and selecting data](https://pandas.pydata.org/docs/user_guide/indexing.html)
+- [DataFrame dtypes](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.dtypes.html)
+- [DataFrame shape](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.shape.html)
+- [Working with missing data](https://pandas.pydata.org/docs/user_guide/missing_data.html)
+- [DataFrame isna](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.isna.html)
+- [Merging and joining](https://pandas.pydata.org/docs/reference/api/pandas.merge.html)
+- [DataFrame groupby](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.groupby.html)
